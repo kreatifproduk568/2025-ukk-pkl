@@ -14,9 +14,14 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified','role:siswa','check_user_email'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified','role:siswa','check_user_email'])
+//     ->name('dashboard');
+
+Route::middleware(['auth', 'verified','role:siswa','check_user_email'])->group(function () {
+    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('/industri', App\Livewire\Front\Industri\Index::class)->name('industri');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

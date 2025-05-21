@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SiswaResource\Pages;
-use App\Filament\Resources\SiswaResource\RelationManagers;
-use App\Models\Siswa;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Siswa;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\SiswaResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\SiswaResource\RelationManagers;
 
 class SiswaResource extends Resource
 {
@@ -44,6 +45,8 @@ class SiswaResource extends Resource
                     ->maxLength(30),
                 Forms\Components\Toggle::make('status_lapor_pkl')
                     ->required(),
+                
+                    
             ]);
     }
 
@@ -75,7 +78,13 @@ class SiswaResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Edit'),
+
+                //menyembuntikan tombol delete
+                // Tables\Actions\DeleteAction::make()
+                //     ->hidden(fn($record) => $record->pkls()->exists()),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -99,4 +108,20 @@ class SiswaResource extends Resource
             'edit' => Pages\EditSiswa::route('/{record}/edit'),
         ];
     }
+
+//     protected function formActions(): array
+// {
+//     return [
+//         DeleteAction::make()
+//             ->disabled(fn ($record) => $record->pkls()->exists())
+//             ->tooltip('Siswa masih terhubung dengan PKLS, tidak bisa dihapus.'),
+//     ];
+// }
+// public function getFormActions(): array
+// {
+//     return [
+//         Tables\Actions\DeleteAction::make()
+//             ->hidden(fn($record) => $record->pkl()->exists()),
+//     ];
+// }
 }

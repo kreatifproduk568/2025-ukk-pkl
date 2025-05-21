@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
-             $table->string('nama',length:50);
+            $table->string('nama',length:50);
             $table->string('nis',length:5)->unique;
             $table->enum('gender',['L','P'])->default('L');
             $table->text('alamat');

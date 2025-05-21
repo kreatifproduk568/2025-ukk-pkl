@@ -110,7 +110,7 @@ class Index extends Component
             ]);
 
             // Update status_lapor siswa
-            $siswa->update(['status_lapor_pkl' => 1]);
+            //$siswa->update(['status_lapor_pkl' => 1]);
 
             DB::commit();
             

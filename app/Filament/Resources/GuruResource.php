@@ -2,16 +2,17 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\GuruResource\Pages;
-use App\Filament\Resources\GuruResource\RelationManagers;
-use App\Models\Guru;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\Guru;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\GuruResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\GuruResource\RelationManagers;
 
 class GuruResource extends Resource
 {
@@ -30,7 +31,12 @@ class GuruResource extends Resource
                 Forms\Components\TextInput::make('nip')
                     ->required()
                     ->maxLength(18),
-                Forms\Components\TextInput::make('gender')
+                Forms\Components\Select::make('gender')
+                    ->label('Gender')
+                    ->options([
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                        ])
                     ->required(),
                 Forms\Components\Textarea::make('alamat')
                     ->required()
@@ -53,7 +59,8 @@ class GuruResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nip')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('gender')
+                ->formatStateUsing(fn ($state) => DB::select("SELECT getGenderCode(?) AS gender", [$state])[0]->gender),
                 Tables\Columns\TextColumn::make('kontak')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
