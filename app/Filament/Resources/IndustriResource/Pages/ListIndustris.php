@@ -10,6 +10,9 @@ class ListIndustris extends ListRecords
 {
     protected static string $resource = IndustriResource::class;
 
+    protected static ?string $title = 'Daftar Mitra Industri';
+
+
     protected function getHeaderActions(): array
     {
         return [

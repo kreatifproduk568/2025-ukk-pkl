@@ -8,6 +8,7 @@ use App\Models\Siswa;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
+use Illuminate\Support\Facades\DB;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\SiswaResource\Pages;
@@ -31,7 +32,12 @@ class SiswaResource extends Resource
                 Forms\Components\TextInput::make('nis')
                     ->required()
                     ->maxLength(5),
-                Forms\Components\TextInput::make('gender')
+                Forms\Components\Select::make('gender')
+                    ->label('Jenis Kelamin')
+                    ->options([
+                        'L' => 'Laki-laki',
+                        'P' => 'Perempuan',
+                        ])
                     ->required(),
                 Forms\Components\Textarea::make('alamat')
                     ->required()
@@ -58,7 +64,8 @@ class SiswaResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nis')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('gender')
+                ->formatStateUsing(fn ($state) => DB::select("SELECT getGenderCode(?) AS gender", [$state])[0]->gender),
                 Tables\Columns\TextColumn::make('kontak')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')

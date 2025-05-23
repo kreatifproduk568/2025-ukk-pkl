@@ -9,6 +9,8 @@ use Filament\Resources\Pages\ListRecords;
 class ListPkls extends ListRecords
 {
     protected static string $resource = PklResource::class;
+    protected static ?string $title = 'Daftar Siswa Lapor PKL';
+
 
     protected function getHeaderActions(): array
     {

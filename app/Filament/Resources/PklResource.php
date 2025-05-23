@@ -19,20 +19,29 @@ class PklResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationLabel = 'Siswa PKL';
+    
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('siswa_id')
+                Forms\Components\Select::make('siswa_id')
+                    ->label('Nama Siswa')
+                    ->relationship('siswa', 'nama')
+                    ->searchable()
+                    ->preload()
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('industri_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('guru_id')
-                    ->required()
-                    ->numeric(),
+                    ->disabled(),
+                
+                Forms\Components\Select::make('industri_id')
+                    ->label('Nama Industri')
+                    ->relationship('industri', 'nama')
+                    ->required(),    
+                Forms\Components\Select::make('guru_id')
+                    ->label('Guru Pembimbing')
+                    ->relationship('guru', 'nama')
+                    ->required(),    
+                
                 Forms\Components\DatePicker::make('mulai')
                     ->required(),
                 Forms\Components\DatePicker::make('selesai')
@@ -44,13 +53,12 @@ class PklResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('siswa_id')
+                Tables\Columns\TextColumn::make('siswa.nama')
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('industri.nama')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('industri_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('guru_id')
+                Tables\Columns\TextColumn::make('guru.nama')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('mulai')
@@ -59,6 +67,11 @@ class PklResource extends Resource
                 Tables\Columns\TextColumn::make('selesai')
                     ->date()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('durasi')
+                    ->label('Durasi (Hari)')
+                    ->sortable()
+                    ->alignment('center'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

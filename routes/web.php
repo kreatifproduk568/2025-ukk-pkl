@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/siswa', function () {
     return "Siswa";
-})->middleware(['auth', 'verified','role:siswa','check_user_email'])
+})->middleware(['auth', 'verified','role:siswa'])
  ->name('siswa');
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+    return view('w');
+})->middleware(['auth','verified','role:siswa'])->name('home');
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified','role:siswa','check_user_email'])

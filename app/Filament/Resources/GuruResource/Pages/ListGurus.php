@@ -9,6 +9,10 @@ use Filament\Resources\Pages\ListRecords;
 class ListGurus extends ListRecords
 {
     protected static string $resource = GuruResource::class;
+    protected static ?string $title = 'Daftar Guru SIJA';
+
+
+    
 
     protected function getHeaderActions(): array
     {
