@@ -89,8 +89,8 @@ class SiswaResource extends Resource
                     ->label('Edit'),
 
                 //menyembuntikan tombol delete
-                // Tables\Actions\DeleteAction::make()
-                //     ->hidden(fn($record) => $record->pkls()->exists()),
+                 //Tables\Actions\DeleteAction::make()
+                 //    ->hidden(fn($record) => $record->pkls()->exists()),
 
             ])
             ->bulkActions([

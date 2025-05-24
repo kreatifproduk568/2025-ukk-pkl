@@ -119,7 +119,6 @@ class Index extends Component
 
             return redirect()->route('dashboard')->with('success', 'Data PKL berhasil disimpan dan status siswa diperbarui!');
 
-            
         }
         catch (\Exception $e) {
             DB::rollBack();
